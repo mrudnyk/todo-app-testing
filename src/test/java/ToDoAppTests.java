@@ -10,12 +10,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.time.Duration;
 
-import static lv.todoapp.pages.MainPage.NEW_TASK_TITLE;
-import static lv.todoapp.pages.MainPage.TASK_TITLE;
+import static lv.todoapp.pages.MainPage.*;
 import static lv.todoapp.utils.ConfigurationProperties.getConfiguration;
 import static lv.todoapp.utils.LocalDriverManager.closeDriver;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 public class ToDoAppTests {
 
@@ -47,7 +47,23 @@ public class ToDoAppTests {
         Assertions.assertThat(mainPage.getEditedTask().getText()).isEqualTo(NEW_TASK_TITLE);
     }
 
-    @Test ()
+    @Test (description = "Activate task")
+    public void testActivateTaskFunction () {
+        driver.get(getConfiguration().getString("app.url"));
+        mainPage.addNewTask(TASK_TITLE);
+        mainPage.activateTask();
+        wait.until(visibilityOf(mainPage.getActivatedTaskTitle()));
+        Assertions.assertThat(mainPage.getActivatedTaskTitle().getText()).isEqualTo(TASK_TITLE);
+    }
+
+    @Test (description = "Delete task")
+    public void testDeleteTaskFunction () {
+        driver.get(getConfiguration().getString("app.url"));
+        mainPage.addNewTask(TASK_TITLE);
+        mainPage.deleteTask();
+        wait.until(visibilityOf(mainPage.getNoTasksText()));
+        Assertions.assertThat(mainPage.getNoTasksText().getText()).isEqualTo(NO_TASKS_TEXT);
+    }
 
     @AfterMethod
     public void after() {

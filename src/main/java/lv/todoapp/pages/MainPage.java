@@ -22,6 +22,7 @@ public class MainPage {
 
     public static final String TASK_TITLE = "Pass the ISTQB exam";
     public static final String NEW_TASK_TITLE = "Pass the ISTQB exam next week";
+    public static final String NO_TASKS_TEXT = "No Tasks";
 
     @FindBy (how = XPATH, xpath = "//button[contains(text(), 'Add New')]")
     WebElement addNewButton;
@@ -49,6 +50,22 @@ public class MainPage {
     @FindBy (how = XPATH, xpath = "//div [@class = 'view-todo__details w-full text-left p-3 bg-white rounded-md cursor-text flex border-b border-gray-300']")
     WebElement editedTask;
 
+    @FindBy (how = XPATH, xpath = "//button[@type='button' and text()='Activate']")
+    WebElement activateButton;
+
+    @FindBy (how = XPATH, xpath = "//a[@class = 'underline']")
+    WebElement boardLink;
+
+    @Getter
+    @FindBy (how = XPATH, xpath = "//label[@class = 'view-todo__label ml-2 text-base rounded-md']")
+    WebElement activatedTaskTitle;
+
+    @FindBy (how = XPATH, xpath = "//button[@type = 'button' and text() = 'Delete']")
+    WebElement deleteButton;
+
+    @Getter
+    @FindBy (how = XPATH, xpath = "//h4[text()='No Tasks']")
+    WebElement noTasksText;
 
     public void addNewTask (String taskTitle){
         addNewButton.click();
@@ -61,6 +78,15 @@ public class MainPage {
         editTaskField.clear();
         editTaskField.sendKeys(newTaskTitle);
         submitButton.click();
+    }
+
+    public void activateTask () {
+        activateButton.click();
+        boardLink.click();
+    }
+
+    public void deleteTask (){
+        deleteButton.click();
     }
 
 }
