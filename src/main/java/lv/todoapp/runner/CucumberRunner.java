@@ -7,7 +7,7 @@ import org.testng.annotations.AfterMethod;
 
 @CucumberOptions (tags = "",
         features = {"src/test/resources/features"},
-        glue = {"lv.acodemy.step_definitions"},
+        glue = {"lv.todoapp.steps_definition"},
         plugin = {"pretty", "html:target/cucumber-reports.html"}
 )
 
